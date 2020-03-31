@@ -64,3 +64,87 @@ CREATE ngrx-playground/e2e/src/app.e2e-spec.ts (648 bytes)
 CREATE ngrx-playground/e2e/src/app.po.ts (301 bytes)
 ✔ Packages installed successfully.
 ```
+
+## Prettier
+
+Used slightly outdated https://medium.com/@leonardomendoza/angular-7-prettier-99ffbec05363
+
+`npm i -D prettier pretty-quick husky tslint-config-prettier`
+
+add to `package.json`
+
+```json
+"husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged && ng lint",
+    }
+  }
+```
+
+add to `tslint.json`
+
+```json
+  "extends": ["tslint:recommended", "tslint-config-prettier"],
+```
+
+create `.vscode/settings.json`
+
+```json
+{
+  "editor.formatOnSave": true
+}
+```
+
+create `.prettierignore`
+
+```
+package.json
+package-lock.json
+dist
+.angulardoc.json
+angular.json
+.vscode/*
+```
+
+try a commit and see if prettier and lint run
+
+If not:
+
+- check if pre-commit is running a proper command
+- and/or: `rm -rf .git/hooks/` `rm -rf node_modules` `npm i`
+
+## Add conventional commits
+
+> note: you can also try the [@commitlint/config-angular](https://github.com/conventional-changelog/commitlint/tree/master/%40commitlint/config-angular) unsure yet what is the difference
+
+`npm i -D @commitlint/cli @commitlint/config-conventional`
+
+create `commitlint.config.js`:
+
+```ts
+module.exports = { extends: ['@commitlint/config-conventional'] }
+```
+
+add to `package.json`:
+
+```json
+"husky": {
+    "hooks": {
+      "...": "...",
+      "commit-msg": "commitlint -e $HUSKY_GIT_PARAMS",
+    }
+  }
+```
+
+## Add pre-push
+
+add to `package.json`:
+
+```json
+"husky": {
+    "hooks": {
+      "...": "...",
+      "pre-push": "ng build"
+    }
+  }
+```
