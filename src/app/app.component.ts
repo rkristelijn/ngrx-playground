@@ -2,7 +2,7 @@ import { Component } from '@angular/core'
 
 @Component({
   selector: 'app-root',
-  template: `<div class="container">hello world</div>`,
+  template: `<app-nav></app-nav>`,
 })
 export class AppComponent {
   title = 'ngrx-playground'
