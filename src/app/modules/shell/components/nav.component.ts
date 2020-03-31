@@ -337,6 +337,7 @@ export class NavComponent implements OnInit {
   showSmallMenu: false
   constructor(private store: Store<any>) {}
 
+  // todo: unsubscribe
   ngOnInit() {
     this.store
       .pipe(select('shell'))
