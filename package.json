@@ -54,7 +54,7 @@
     "hooks": {
       "pre-commit": "pretty-quick --staged && ng lint",
       "commit-msg": "commitlint -e $HUSKY_GIT_PARAMS",
-      "pre-push": "ng test && ng build"
+      "pre-push": "ng build"
     }
   }
 }
