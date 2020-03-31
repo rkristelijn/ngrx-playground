@@ -1,10 +1,9 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core'
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  template: `<div>hello world</div>`,
 })
 export class AppComponent {
-  title = 'ngrx-playground';
+  title = 'ngrx-playground'
 }
