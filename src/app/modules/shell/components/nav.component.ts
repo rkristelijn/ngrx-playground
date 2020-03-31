@@ -1,4 +1,7 @@
-import { Component } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
+import { Store, select } from '@ngrx/store'
+
+// template from https://getbootstrap.com/docs/4.0/examples/dashboard/
 
 @Component({
   selector: 'app-nav',
@@ -19,9 +22,34 @@ import { Component } from '@angular/core'
     </nav>
     <div class="container-fluid">
       <div class="row">
-        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+        <nav
+          class="d-none d-md-block bg-light sidebar"
+          [ngClass]="showSmallMenu ? 'col-md-1' : 'col-md-2'"
+        >
           <div class="sidebar-sticky">
             <ul class="nav flex-column">
+              <li class="nav-item" (click)="toggleMenu($event)">
+                <a class="nav-link active" href="#">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="feather feather-home"
+                  >
+                    <rect width="24" height="2"></rect>
+                    <rect y="10" width="24" height="2"></rect>
+                    <rect y="20" width="24" height="2"></rect>
+                  </svg>
+                  Menu <span class="sr-only">(current)</span>
+                </a>
+              </li>
+
               <li class="nav-item">
                 <a class="nav-link active" href="#">
                   <svg
@@ -299,7 +327,25 @@ import { Component } from '@angular/core'
         overflow-x: hidden;
         overflow-y: auto;
       }
+      .sidebar {
+        width: 20px;
+      }
     `,
   ],
 })
-export class NavComponent {}
+export class NavComponent implements OnInit {
+  showSmallMenu: false
+  constructor(private store: Store<any>) {}
+
+  ngOnInit() {
+    this.store
+      .pipe(select('shell'))
+      .subscribe(
+        (shell) => (this.showSmallMenu = shell ? shell.showSmallMenu : true)
+      )
+  }
+  toggleMenu($event: Event) {
+    $event.stopPropagation()
+    this.store.dispatch({ type: 'TOGGLE_MENU', payload: this.showSmallMenu })
+  }
+}

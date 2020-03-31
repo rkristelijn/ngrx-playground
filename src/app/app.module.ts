@@ -8,6 +8,8 @@ import { AppComponent } from './app.component'
 import { ShellModule } from './modules/shell/shell.module'
 import { DashboardModule } from './modules/dashboard/dashboard.module'
 
+import { appReducer } from './app.reducer'
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -16,7 +18,7 @@ import { DashboardModule } from './modules/dashboard/dashboard.module'
     AppRoutingModule,
     ShellModule,
     DashboardModule,
-    StoreModule.forRoot({}),
+    StoreModule.forRoot(appReducer),
   ],
   providers: [ShellModule],
   bootstrap: [AppComponent],
